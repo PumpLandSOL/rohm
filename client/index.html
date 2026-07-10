@@ -32,8 +32,8 @@
   .tab.on{color:var(--ink);background:var(--glass)}
   .tab:hover{color:var(--ink)}
   .wbox{margin-left:auto;display:flex;align-items:center;gap:8px}
-  .wbox input{background:#081008;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;width:190px;outline:none}
-  .wbox input:focus{border-color:var(--blue)}
+  #connectBtn.connected{background:#081008;color:var(--teal);border:1px solid rgba(61,255,92,.45);font-family:'JetBrains Mono',monospace;font-size:12.5px;box-shadow:0 0 14px rgba(0,200,5,.15)}
+  #connectBtn.connected:hover{border-color:var(--red);color:var(--red)}
   .btn{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:10px;padding:10px 16px;cursor:pointer;transition:filter .12s,transform .1s}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:linear-gradient(100deg,var(--blue),var(--teal));color:#03230a;box-shadow:0 4px 22px rgba(0,200,5,.3)}
@@ -138,10 +138,11 @@
     <div class="tab" data-view="stake">Stake</div>
     <div class="tab" data-view="bond">Bond</div>
     <div class="tab" data-view="calc">Calculator</div>
+    <a class="tab" href="/docs">Docs</a>
   </div>
   <div class="wbox">
-    <input id="wallet" maxlength="42" placeholder="paste 0x wallet" autocomplete="off">
-    <a class="x" id="xbtn" href="https://x.com/RobinhoodOlympus" target="_blank" rel="noopener" aria-label="Olympus on X"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <button class="btn primary" id="connectBtn">Connect Wallet</button>
+    <a class="x" id="xbtn" href="https://x.com/RobinhoodOHM" target="_blank" rel="noopener" aria-label="Olympus on X"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
   </div>
 </div></header>
 
@@ -222,7 +223,7 @@
 <div class="toast" id="toast"></div>
 <footer>
   <div class="fbrand"><span class="mark omg">Ω</span><span class="nm">OLYMPUS</span></div>
-  <div>(3,3) · the reserve currency of Robinhood Chain · $rOHM</div>
+  <div>(3,3) · the reserve currency of Robinhood Chain · $rOHM · <a href="/docs" style="color:var(--sub)">Docs</a></div>
 </footer>
 
 <script src="/client/src/app.js"></script>

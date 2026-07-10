@@ -20,11 +20,29 @@
     ['dash', 'stake', 'bond', 'calc'].forEach((v) => $(v).classList.toggle('hide', v !== t.dataset.view));
   }));
 
-  // ---- wallet ----
-  if (wallet) $('wallet').value = wallet;
-  $('wallet').addEventListener('change', setW);
-  $('wallet').addEventListener('keydown', (e) => { if (e.key === 'Enter') setW(); });
-  function setW() { const v = $('wallet').value.trim(); if (isW(v)) { wallet = v; localStorage.setItem('rohm_w', v); loadAccount(); } else if (!v) { wallet = ''; A = null; } }
+  // ---- wallet (EVM connect via injected provider) ----
+  const short = (a) => a.slice(0, 6) + '…' + a.slice(-4);
+  function renderWallet() {
+    const b = $('connectBtn');
+    if (wallet) { b.textContent = short(wallet); b.classList.add('connected'); b.classList.remove('primary'); b.title = 'Disconnect'; }
+    else { b.textContent = 'Connect Wallet'; b.classList.remove('connected'); b.classList.add('primary'); b.title = ''; }
+  }
+  function setWallet(a) {
+    if (a && isW(a)) { wallet = a; localStorage.setItem('rohm_w', a); renderWallet(); loadAccount(); }
+    else { wallet = ''; A = null; localStorage.removeItem('rohm_w'); renderWallet(); ['yStaked', 'yBalance', 'yNext'].forEach((id) => $(id).textContent = '—'); renderYourBonds(); }
+  }
+  $('connectBtn').onclick = async () => {
+    if (wallet) { setWallet(''); toast('Wallet disconnected'); return; }
+    const eth = window.ethereum;
+    if (!eth) return toast('No EVM wallet found — install MetaMask or Rabby');
+    try {
+      const acc = await eth.request({ method: 'eth_requestAccounts' });
+      if (acc && acc[0] && isW(acc[0])) { setWallet(acc[0]); toast('Connected ' + short(acc[0]) + ' (3,3)'); }
+      else toast('No account returned');
+    } catch (e) { toast('Connection rejected'); }
+  };
+  if (window.ethereum && window.ethereum.on) window.ethereum.on('accountsChanged', (acc) => { setWallet(acc && acc[0]); });
+  renderWallet();
 
   // ---- fetch ----
   async function loadMetrics() { try { M = await (await fetch('/api/metrics')).json(); reanchor(); renderMetrics(); renderBonds(); } catch (e) {} }
@@ -80,7 +98,7 @@
     $('bondCards').querySelectorAll('[data-bond]').forEach((btn) => btn.addEventListener('click', () => doBond(btn.dataset.bond)));
   }
   function renderYourBonds() {
-    if (!A) { $('yourBonds').innerHTML = '<div class="psub" style="margin-top:10px">Paste a wallet to see your bonds.</div>'; return; }
+    if (!A) { $('yourBonds').innerHTML = '<div class="psub" style="margin-top:10px">Connect your wallet to see your bonds.</div>'; return; }
     if (!A.bonds || !A.bonds.length) { $('yourBonds').innerHTML = '<div class="psub" style="margin-top:10px">No active bonds.</div>'; return; }
     $('yourBonds').innerHTML = A.bonds.map((b) => `
       <div class="yb"><span>${b.market} · <b style="color:var(--ink)">${tok(b.payout)}</b> $rOHM</span>
@@ -95,13 +113,13 @@
   $('segUnstake').onclick = () => { stakeMode = 'unstake'; $('segUnstake').classList.add('on'); $('segStake').classList.remove('on'); $('stakeBtn').textContent = 'Unstake'; };
   $('stakeMax').onclick = () => { if (!A) return; $('stakeAmt').value = (stakeMode === 'stake' ? A.balance : A.staked).toFixed(2); };
   $('stakeBtn').onclick = async () => {
-    if (!isW(wallet)) return toast('paste your wallet first');
+    if (!isW(wallet)) return toast('connect your wallet first');
     const amt = parseFloat($('stakeAmt').value); if (!(amt > 0)) return toast('enter an amount');
     const r = await post('/api/' + stakeMode, { wallet, amount: amt });
     if (r.error) return toast(r.error); A = r; reanchor(); renderAccount(); $('stakeAmt').value = ''; toast((stakeMode === 'stake' ? 'Staked ' : 'Unstaked ') + tok(amt) + ' $rOHM (3,3)');
   };
   async function doBond(id) {
-    if (!isW(wallet)) return toast('paste your wallet first');
+    if (!isW(wallet)) return toast('connect your wallet first');
     const amt = parseFloat(($('bondAmt_' + id) || {}).value); if (!(amt > 0)) return toast('enter an amount');
     const r = await post('/api/bond', { wallet, market: id, amount: amt });
     if (r.error) return toast(r.error); A = r; renderYourBonds(); loadMetrics(); $('bondAmt_' + id).value = ''; toast('Bonded — ' + tok(r.payout) + ' $rOHM vesting');
@@ -138,7 +156,7 @@
   }
   $('calcAmt').addEventListener('input', calc); $('calcDays').addEventListener('input', calc);
 
-  $('xbtn').href = window.__X__ || 'https://x.com/RobinhoodOlympus';
+  $('xbtn').href = window.__X__ || 'https://x.com/RobinhoodOHM';
 
   loadMetrics(); if (wallet) loadAccount();
   setInterval(loadMetrics, 6000); setInterval(() => { if (wallet) { loadAccount(); renderYourBonds(); } }, 6000);
