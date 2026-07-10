@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olympus — the reserve currency of Robinhood Chain · (3,3)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Cinzel:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#050806;--bg2:#081008;--card:#0a120b;--glass:rgba(255,255,255,.025);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+    --ink:#eaf0fb;--sub:#9fb0cc;--mut:#5f6f8c;
+    --blue:#00c805;--blue2:#3dff5c;--teal:#3dff5c;--green:#00c805;--amb:#ffce5a;--red:#ff6b81}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(55% 45% at 15% 0%,rgba(0,200,5,.14),transparent 60%),
+    radial-gradient(50% 45% at 85% 5%,rgba(61,255,92,.12),transparent 60%),
+    radial-gradient(60% 50% at 50% 110%,rgba(0,200,5,.06),transparent 70%)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .grad{background:linear-gradient(100deg,var(--blue),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .so{font-family:'Sora',sans-serif}.mono{font-family:'JetBrains Mono',monospace}
+  /* header */
+  header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(5,8,6,.7);border-bottom:1px solid var(--line)}
+  .hrow{display:flex;align-items:center;gap:18px;height:66px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.4px}
+  .logo .o{font-family:'Cinzel',serif;font-weight:800;font-size:24px;line-height:1;background:linear-gradient(180deg,#b8ffc4,#00c805 55%,#00891c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(0,200,5,.55))}
+  .logo{font-family:'Cinzel',serif}
+  .tabs{display:flex;gap:4px;margin-left:8px}
+  .tab{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:var(--sub);padding:8px 15px;border-radius:9px;cursor:pointer}
+  .tab.on{color:var(--ink);background:var(--glass)}
+  .tab:hover{color:var(--ink)}
+  .wbox{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .wbox input{background:#081008;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;width:190px;outline:none}
+  .wbox input:focus{border-color:var(--blue)}
+  .btn{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:10px;padding:10px 16px;cursor:pointer;transition:filter .12s,transform .1s}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:linear-gradient(100deg,var(--blue),var(--teal));color:#03230a;box-shadow:0 4px 22px rgba(0,200,5,.3)}
+  .btn.primary:hover{filter:brightness(1.07)}
+  .btn.ghost{background:var(--glass);color:var(--ink);border:1px solid var(--line2)}
+  .btn:disabled{opacity:.45;cursor:default}
+  /* hero (3,3) */
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--teal);background:rgba(61,255,92,.07);border:1px solid rgba(61,255,92,.3);border-radius:999px;padding:6px 14px;margin:34px 0 0}
+  h1{font-family:'Cinzel',serif;font-weight:800;font-size:clamp(30px,4.6vw,48px);letter-spacing:-1.4px;line-height:1.05;margin-top:16px}
+  .lede{color:var(--sub);font-size:16px;max-width:560px;margin-top:12px;line-height:1.6}.lede b{color:var(--ink)}
+  section{padding:8px 0}
+  /* stat grid */
+  .grid{display:grid;gap:14px;margin-top:26px}
+  .g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}}
+  .stat{position:relative;background:linear-gradient(180deg,rgba(20,28,46,.7),rgba(12,18,34,.8));border:1px solid var(--line);border-radius:16px;padding:18px 20px;overflow:hidden}
+  .stat::before{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;background:linear-gradient(140deg,rgba(0,200,5,.4),transparent 50%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.5}
+  .stat .l{font-size:12px;color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+  .stat .v{font-family:'Sora',sans-serif;font-weight:700;font-size:26px;margin-top:6px;letter-spacing:-.5px}
+  .stat.hl .v{color:var(--teal)}.stat .s{font-size:11.5px;color:var(--mut);margin-top:3px}
+  /* panels */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin-top:18px}
+  .ptitle{font-family:'Sora',sans-serif;font-weight:700;font-size:18px}
+  .psub{color:var(--sub);font-size:13px;margin-top:4px}
+  .seg{display:flex;gap:6px;background:#081008;border:1px solid var(--line);border-radius:11px;padding:4px;margin-top:18px;width:fit-content}
+  .seg button{font-family:'Sora',sans-serif;font-weight:600;font-size:13px;color:var(--sub);background:none;border:none;padding:8px 18px;border-radius:8px;cursor:pointer}
+  .seg button.on{color:var(--ink);background:var(--glass)}
+  .field{display:flex;gap:10px;margin-top:16px}
+  .field .ig{flex:1;display:flex;align-items:center;background:#081008;border:1px solid var(--line);border-radius:11px;padding:0 14px}
+  .field input{flex:1;background:none;border:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:16px;padding:13px 0;outline:none}
+  .field .max{font-family:'Sora',sans-serif;font-weight:600;font-size:12px;color:var(--blue2);cursor:pointer;padding:4px 8px}
+  .bignum{font-family:'Sora',sans-serif;font-weight:800;font-size:34px;letter-spacing:-1px;margin-top:6px}
+  .rows{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+  .row{display:flex;justify-content:space-between;padding:7px 0;font-size:13.5px;color:var(--sub)}
+  .row b{color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:500}
+  .row .tl{color:var(--teal)}
+  .cd{font-family:'JetBrains Mono',monospace;color:var(--teal)}
+  /* bond cards */
+  .bonds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media(max-width:820px){.bonds{grid-template-columns:1fr}}
+  .bond{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .bond h3{font-family:'Sora',sans-serif;font-size:16px}
+  .bond .disc{font-family:'Sora',sans-serif;font-weight:800;font-size:30px;color:var(--green);margin:8px 0 2px}
+  .bond .dl{font-size:11px;color:var(--mut)}
+  .bond .br{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:8px}
+  .bond .bf{display:flex;gap:8px;margin-top:14px}
+  .bond .bf input{flex:1;background:#081008;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none}
+  .bond .bf input:focus{border-color:var(--blue)}
+  .bond .bf button{font-family:'Sora',sans-serif;font-weight:600;font-size:13px;border:none;border-radius:9px;padding:0 16px;background:linear-gradient(100deg,var(--blue),var(--teal));color:#03230a;cursor:pointer}
+  .ybonds{margin-top:20px}
+  .yb{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#081008;border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-top:10px;font-size:13px}
+  .yb .prog{height:5px;background:#14231a;border-radius:3px;overflow:hidden;flex:1;max-width:160px;margin:0 12px}
+  .yb .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal))}
+  .ca{margin:20px auto 0;display:none;align-items:center;gap:10px;background:#081008;border:1px solid rgba(0,200,5,.3);border-radius:11px;padding:8px 8px 8px 14px;width:fit-content}
+  .ca .k{font-family:'Sora',sans-serif;font-weight:700;color:var(--blue2);font-size:12px}.ca .v{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink)}
+  .ca .cp{font-family:'Sora',sans-serif;font-weight:600;font-size:11px;color:#03230a;background:linear-gradient(100deg,var(--blue),var(--teal));border:none;border-radius:7px;padding:7px 12px;cursor:pointer}
+  .x{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,rgba(0,200,5,.18),rgba(61,255,92,.12));border:1px solid rgba(0,200,5,.5);color:#fff;box-shadow:0 0 16px rgba(0,200,5,.25)}.x:hover{border-color:var(--teal);filter:brightness(1.15)}
+  .hide{display:none!important}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--teal);color:var(--teal);padding:12px 20px;border-radius:12px;z-index:60;font-size:14px;display:none;font-weight:600}
+  footer{border-top:1px solid var(--line);padding:30px 0;margin-top:46px;color:var(--mut);font-size:12.5px;text-align:center}
+  .disc-note{color:var(--mut);font-size:11.5px;margin-top:16px;line-height:1.6;text-align:center;max-width:680px;margin-left:auto;margin-right:auto}
+  /* --- presentation polish --- */
+  .mark{flex:none;filter:drop-shadow(0 0 10px rgba(0,200,5,.45))}
+  .brandrow{display:flex;align-items:center;gap:11px;margin-top:30px}
+  .mark.omg{font-family:'Cinzel',serif;font-weight:800;font-size:26px;line-height:1;background:linear-gradient(180deg,#b8ffc4,#00c805 55%,#00891c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(0,200,5,.5))}
+  footer .fbrand .mark.omg{font-size:19px}
+  .brandrow .nm{font-family:'Sora',sans-serif;font-weight:800;font-size:13px;letter-spacing:.3em;color:var(--sub)}
+  .pill{margin-top:14px}
+  /* $rOHM token name — brightest element */
+  .tok{color:var(--teal);font-weight:800;text-shadow:0 0 22px rgba(61,255,92,.7),0 0 7px rgba(61,255,92,.55)}
+  /* featured stat row (3 dominant) */
+  .grid.feat{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.grid.feat{grid-template-columns:1fr}}
+  .stat.big{padding:24px 24px;border-color:var(--line2);box-shadow:0 0 34px rgba(0,200,5,.10)}
+  .stat.big .l{font-size:12.5px;color:var(--sub)}
+  .stat.big .v{font-size:40px;margin-top:8px}
+  .stat.big::before{background:linear-gradient(140deg,rgba(61,255,92,.55),transparent 55%);opacity:.7}
+  /* secondary stats (smaller) */
+  .stat.sm{padding:14px 16px}
+  .stat.sm .l{font-size:10.5px}.stat.sm .v{font-size:20px}.stat.sm .s{font-size:10.5px}
+  /* live next-rebase — the dopamine tile */
+  .stat.rebase{border-color:rgba(61,255,92,.5);animation:rebGlow 2.4s ease-in-out infinite}
+  .stat.rebase::before{background:linear-gradient(140deg,rgba(61,255,92,.85),transparent 55%);opacity:.9}
+  .stat.rebase .l{display:flex;justify-content:space-between;align-items:center}
+  .stat.rebase .l::after{content:"\25CF LIVE";color:var(--teal);font-size:9px;letter-spacing:.12em;animation:rebPulse 1.3s ease-in-out infinite}
+  .stat.rebase .v{color:var(--teal);font-family:'JetBrains Mono',monospace;font-weight:700;animation:rebText 1.5s ease-in-out infinite}
+  @keyframes rebGlow{0%,100%{box-shadow:0 0 22px rgba(61,255,92,.10)}50%{box-shadow:0 0 40px rgba(61,255,92,.24)}}
+  @keyframes rebText{0%,100%{text-shadow:0 0 9px rgba(61,255,92,.4)}50%{text-shadow:0 0 24px rgba(61,255,92,.85)}}
+  @keyframes rebPulse{0%,100%{opacity:1}50%{opacity:.4}}
+  /* footer identity + tighter spacing */
+  footer{margin-top:26px}
+  footer .fbrand{display:inline-flex;align-items:center;gap:9px;margin-bottom:9px}
+  footer .fbrand .mark{width:22px;height:18px}
+  footer .fbrand .nm{font-family:'Sora',sans-serif;font-weight:800;font-size:13px;letter-spacing:.22em;color:var(--sub)}
+</style>
+</head>
+<body>
+<header><div class="wrap hrow">
+  <div class="logo"><span class="o">Ω</span>OLYMPUS</div>
+  <div class="tabs">
+    <div class="tab on" data-view="dash">Dashboard</div>
+    <div class="tab" data-view="stake">Stake</div>
+    <div class="tab" data-view="bond">Bond</div>
+    <div class="tab" data-view="calc">Calculator</div>
+  </div>
+  <div class="wbox">
+    <input id="wallet" maxlength="42" placeholder="paste 0x wallet" autocomplete="off">
+    <a class="x" id="xbtn" href="https://x.com/RobinhoodOlympus" target="_blank" rel="noopener" aria-label="Olympus on X"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <!-- DASHBOARD -->
+  <section id="dash">
+    <div class="brandrow"><span class="mark omg">Ω</span><span class="nm">OLYMPUS</span></div>
+    <span class="pill">Ω The reserve currency of Robinhood Chain · (3,3)</span>
+    <h1>Stake <span class="tok">$rOHM</span>. Earn the rebase.<br>Back it with the treasury.</h1>
+    <div class="lede">An OHM-style reserve protocol. <b>Stake</b> to auto-compound every rebase, <b>bond</b> to buy $rOHM at a discount and grow the treasury. <b>(3,3)</b>.</div>
+    <div class="grid feat">
+      <div class="stat big hl"><div class="l">APY</div><div class="v" id="mApy">—</div><div class="s">auto-compounding</div></div>
+      <div class="stat big"><div class="l">Treasury Balance</div><div class="v" id="mTreasury">—</div><div class="s" id="mBacking">backing —</div></div>
+      <div class="stat big rebase"><div class="l">Next Rebase</div><div class="v cd" id="mRebase">—</div><div class="s">epoch <span id="mEpoch">0</span></div></div>
+    </div>
+    <div class="grid g4">
+      <div class="stat sm"><div class="l">$rOHM Price</div><div class="v" id="mPrice">—</div><div class="s" id="mMc">mcap —</div></div>
+      <div class="stat sm"><div class="l">Total Staked</div><div class="v" id="mStaked">—</div><div class="s" id="mRatio">— of supply</div></div>
+      <div class="stat sm"><div class="l">Current Index</div><div class="v mono" id="mIndex">—</div><div class="s">$rOHM per sROHM</div></div>
+      <div class="stat sm"><div class="l">Runway</div><div class="v" id="mRunway">—</div><div class="s">at current emissions</div></div>
+    </div>
+    <div class="panel" id="lbPanel" style="display:none"><div class="ptitle" style="font-size:16px">👑 Top Stakers</div><div id="lbRows" style="margin-top:12px"></div></div>
+    <p class="disc-note">Emissions are funded from a finite reserve on a fixed schedule — not infinite minting. Staking &amp; bonds are tracked off-chain (ledger) and settled by airdrop; the treasury is on-chain. Not financial advice; high-APY reserve models carry real risk.</p>
+  </section>
+
+  <!-- STAKE -->
+  <section id="stake" class="hide">
+    <div class="panel">
+      <div class="ptitle">Stake $rOHM</div>
+      <div class="psub">Stake to receive sROHM — your balance rebases up every epoch, automatically.</div>
+      <div class="seg"><button class="on" id="segStake">Stake</button><button id="segUnstake">Unstake</button></div>
+      <div class="field"><div class="ig"><input id="stakeAmt" type="text" inputmode="decimal" placeholder="0.0"><span class="max" id="stakeMax">MAX</span></div><button class="btn primary" id="stakeBtn">Stake</button></div>
+      <div style="margin-top:22px"><div class="l" style="font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em">Your staked balance</div><div class="bignum grad" id="yStaked">—</div></div>
+      <div class="rows">
+        <div class="row"><span>Wallet balance</span><b id="yBalance">—</b></div>
+        <div class="row"><span>Next reward yield</span><b class="tl" id="yNext">—</b></div>
+        <div class="row"><span>APY</span><b class="tl" id="yApy">—</b></div>
+        <div class="row"><span>Next rebase</span><b class="cd" id="yRebase">—</b></div>
+        <div class="row"><span>ROI (5-day)</span><b class="tl" id="yRoi5">—</b></div>
+        <div class="row"><span>ROI (7-day)</span><b class="tl" id="yRoi7">—</b></div>
+        <div class="row"><span>ROI (30-day)</span><b class="tl" id="yRoi30">—</b></div>
+        <div class="row"><span>ROI (1-year)</span><b class="tl" id="yRoi1y">—</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOND -->
+  <section id="bond" class="hide">
+    <div class="panel" style="padding-bottom:8px">
+      <div class="ptitle">Bond Marketplace</div>
+      <div class="psub">Buy $rOHM at a discount with vesting. Your payment grows the treasury (protocol-owned).</div>
+      <div class="bonds" id="bondCards"></div>
+    </div>
+    <div class="panel ybonds-wrap"><div class="ptitle" style="font-size:16px">Your bonds</div><div id="yourBonds"><div class="psub" style="margin-top:10px">No active bonds.</div></div></div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section id="calc" class="hide">
+    <div class="panel">
+      <div class="ptitle">Staking Calculator</div>
+      <div class="psub">Project your $rOHM at the current APY. The magic of auto-compounding (3,3).</div>
+      <div class="grid g2" style="margin-top:18px">
+        <div><label style="display:block;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px">$rOHM staked</label><div class="ig" style="display:flex;align-items:center;background:#081008;border:1px solid var(--line);border-radius:11px;padding:0 14px"><input id="calcAmt" type="text" inputmode="decimal" value="1000" style="flex:1;background:none;border:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:16px;padding:13px 0;outline:none"></div></div>
+        <div><label style="display:block;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px">Days staked · <b id="calcDaysL" style="color:var(--blue2)">30</b></label><input id="calcDays" type="range" min="1" max="365" value="30" style="width:100%;accent-color:var(--blue);margin-top:14px"></div>
+      </div>
+      <div class="grid g3" style="margin-top:8px">
+        <div class="stat"><div class="l">Projected $rOHM</div><div class="v grad" id="calcOut">—</div><div class="s" id="calcMult">—</div></div>
+        <div class="stat"><div class="l">Projected value</div><div class="v" id="calcUsd">—</div><div class="s">at $<span id="calcPrice">—</span> / $rOHM</div></div>
+        <div class="stat"><div class="l">Profit</div><div class="v hl" id="calcProfit">—</div><div class="s">vs not staking</div></div>
+      </div>
+      <p class="disc-note" style="text-align:left">Projections assume the current APY holds constant — it won't. APY decays as the protocol matures and the reserve emits. Illustrative only.</p>
+    </div>
+  </section>
+
+  <a class="ca" id="ca" href="#" target="_blank" rel="noopener"><span class="k">$rOHM CA</span><span class="v" id="caV"></span><button class="cp" id="caCopy" type="button">Copy</button></a>
+</div>
+
+<div class="toast" id="toast"></div>
+<footer>
+  <div class="fbrand"><span class="mark omg">Ω</span><span class="nm">OLYMPUS</span></div>
+  <div>(3,3) · the reserve currency of Robinhood Chain · $rOHM</div>
+</footer>
+
+<script src="/client/src/app.js"></script>
+</body>
+</html>
